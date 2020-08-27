@@ -36,9 +36,10 @@ RUN echo  " node version:    $(node -v) \n" \
 
 WORKDIR /app
 
-COPY ./package.json ./package-lock.json ./
+COPY ./package.json ./yarn.lock ./
 
 ENV CI=1
-RUN npm ci
 
-RUN npm run cypress verify
+RUN yarn install --frozen-lockfile
+
+RUN yarn run cypress verify
